@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiem Tra Thuc hanh</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function(e){
+            var i=1;
+            $("#btn2").click(function(){
+                $("#myModal").modal();
+            });
+
+            function kiemTraTen(){
+                var i=1;
+                let mauKT = /([A-Z]{1}[a-z]+)((\s{1}[a-z]+)(1,))$/;
+                if($("#Name").val()==""){
+                    $("#tbName").html("Không để trống");
+                    return false;
+                }
+                if(!mauKT.test($("#Name").val())){
+                    $("#tbName").html("Mỗi ký tự đàu viết hoa khôn dùng số");
+                    return true;
+                }
+                
+            
+            }$("#Name").blur(kiemTraTen);
+
+            // function kiemTraAo(){
+            //     var mauKT = /^\d*$/;
+                
+            // }
+            $("#Save").click(function(){
+                if(kiemTraTen == true){
+                    row="<tr>";
+                    row += "<th>" + (i++) + "</th>";
+                    row += "<th>" + $("#Name").val() + "</th>";
+                    row += "<th>" + $("#Ao").val() + "</th>";
+                    row += "<th>" + $("#CLB").val() + "</th>";
+                    row += "<th>" + $("#NTT").val() + "</th>";
+                    row += "<th>" + $("#SDT").val() + "</th>";
+                    row += "<th>" + $("#AVT").val() + "</th>";
+                    $("#danhsach").append(row);
+                    $("#myModal").modal("hide");
+                }
+            })    
+        })
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-12">
+            <img src="../img/HEADER.PNG" alt="" width="100%" height="400px">
+        </div>
+
+        <div class="col-xs-12">
+            <nav class="navbar navbar-expand-sm bg-dark justify-content-center">
+                <li class="navbar-item">
+                    <a class="navbar-link" href="#" style="margin-right: 20px" id="btn1">Đăng nhập</a>
+
+                </li>
+                <li class="navbar-item"><a class="navbar-link" href="#" id="btn2">Đăng kí</a></li>
+            </nav>
+        </div>
+
+        <div class="col-xs-12">
+            <h4 style="text-align:center;">
+                DANH SÁCH ĐỘI TUYỂN VIỆT NAM
+            </h4>
+            <table class="table table-striped" role="table" id="danhsach">
+                <tr>
+                    <th>STT</th>
+                    <th>Họ tên</th>
+                    <th>Số áo</th>
+                    <th>Câu lạc bộ</th>
+                    <th>Ngày tập trung</th>
+                    <th>Điện thoại</th>
+                    <th>Ảnh đại diện</th>
+                </tr>
+                <tbody>
+                    <tr>
+                        <th>1</th>
+                        <th>Nguyễn Minh Tâm</th>
+                        <th>19</th>
+                        <th>Gò Vấp</th>
+                        <th>28-04-2022</th>
+                        <th>0332766225</th>
+                        <th>Anh1</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer>
+            <div class="col-xs-12">
+                <p style="text-align: center">Nguyễn Minh Tâm - 16019241 - DHCNTT16C</p>
+            </div>
+        </footer>
+    </div>
+    
+</body>
+</html>
+<div class="modal-fade" role=dialog id="myModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>THÔNG TIN CÁ NHÂN</h2>
+        </div>
+        <div class="modal-body">
+            <form role="form" class="form-horizontal" style="margin-top: 10px;">
+                <label for="Name" class="control-label col-xs-3">Họ Tên</label>
+                <div class="col-xs-9">
+                    <input type="text" id="Name" class="form-control">
+                    <span class="text-danger" id="tbName">*</span>
+                </div>
+                <label for="Ao" class="control-label col-xs-3">Số áo</label>
+                <div class="col-xs-9">
+                    <input type="text" id="Ao" class="form-control">
+                    <span class="text-danger" style="color:red;" id="tbAo">*</span>
+                </div>
+                <label for="CLB" class="control-label col-xs-3">Câu lạc bộ</label>
+                <div class="col-xs-9">
+                    <input type="text" id="CLB" class="form-control">
+                    <span class="text-danger" style="color:red;" id="tbCLB">*</span>
+                </div>
+                <label for="NTT" class="control-label col-xs-3">Ngày tập trung</label>
+                <div class="col-xs-9">
+                    <input type="text" id="NTT" class="form-control">
+                    <span class="text-danger" style="color:red;" id="tbNTT">*</span>
+                </div>
+                <label for="SDT" class="control-label col-xs-3">Số điẹn thoại</label>
+                <div class="col-xs-9">
+                    <input type="text" id="SDT" class="form-control">
+                    <span class="text-danger" style="color:red;" id="tbSDT">*</span>
+                </div>
+                <label for="AVT" class="control-label col-xs-3">Ảnh đại diện</label>
+                <div class="col-xs-9">
+                    <input type="text" id="AVT" class="form-control">
+                    <span class="text-danger" style="color:red;" id="tbAVT">*</span>
+                </div>
+                <button class="btn btn-success btn-group-justified" id="Save" type="button" style="color:white; background-color:green; width:100%;" > Lưu
+
+                </button>
+
+            </form>
+            
+        </div>
+    </div>
+</div>
