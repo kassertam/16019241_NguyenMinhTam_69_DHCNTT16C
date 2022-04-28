@@ -31,24 +31,93 @@
             
             }$("#Name").blur(kiemTraTen);
 
-            // function kiemTraAo(){
-            //     var mauKT = /^\d*$/;
-                
-            // }
-            $("#Save").click(function(){
-                if(kiemTraTen == true){
-                    row="<tr>";
-                    row += "<th>" + (i++) + "</th>";
-                    row += "<th>" + $("#Name").val() + "</th>";
-                    row += "<th>" + $("#Ao").val() + "</th>";
-                    row += "<th>" + $("#CLB").val() + "</th>";
-                    row += "<th>" + $("#NTT").val() + "</th>";
-                    row += "<th>" + $("#SDT").val() + "</th>";
-                    row += "<th>" + $("#AVT").val() + "</th>";
-                    $("#danhsach").append(row);
-                    $("#myModal").modal("hide");
-                }
-            })    
+            function kiemTraSoAo(){
+        var mauKT = /^\d*$/;
+       
+        if($("#Ao").val()== ""){
+            $("#tbAo").html("Không để trống");
+            return false;
+        }
+        if (!mauKT.test($("#Ao").val())){
+            $("#tbName").html("Dùng số từ 1 đến 20");
+            return true;
+        }else{
+            var soAo = $("#Ao").val();
+            if(soAo<1 || soAo >20){
+                $("#tbAo").html("từ 1 đến 20");
+            } else {
+                $("#tbtName").html("*");
+                return true;
+            }
+        }
+    }
+    $("#Ao").blur(kiemTraSoAo);
+
+    function kiemTraCLB(){
+        var mauKT = /^[A-Z0-9][a-z0-9]*(\s[A-Z0-9][a-z0-9]*)*$/;
+        if($("#CLB").val() == ""){
+            $("#tbCLB").html("Không để trống");
+            return false;
+        }
+        if(!mauKT.test($("#CLB").val())) {
+            $("tbCLB").html("Mỗi ký tự đầu viết hoa không sử dụng số");
+            return true;
+        }
+        $("#tbCLB").html("*");
+        return true;
+    }
+    $("#DC").blur(kiemTraDiaChi);
+    
+    function kiemTraNTT(){
+        if($("#NTT").val() == ""){
+            $("#tbNTT").html("Không để trống");
+            return false;
+        }
+
+        var today = new Date();
+        var ntt = new Date($("#NTT").val());
+        today = today.setDate(today.getDate() + 7);
+        if(today > ntt) {
+            $("tbNTT").html("Phải sau ngày hiện tại 7 ngày");
+            return true;
+        }
+        $("#tbNTT").html("*");
+        return true;
+    }
+    $("#NTT").blur(kiemTraNTT);
+
+    function kiemTraSDT(){
+        var mauKT= /^0\d{3}-\d{3}-\d{3}$/;
+        if($("#SDT").val() == ""){
+            $("#tbNTT").html("Không để trống");
+            return false;
+        }
+
+        
+        if(!mauKT.test($("#SDT").val())){} {
+            $("tbSDT").html("Theo dạng 0xxx-xxx-xxx");
+            return true;
+        }
+        
+        $("#tbSDT").html("*");
+        return true;
+    }
+    $("#SDT").blur(kiemTraSDT);
+
+    $("#Save").click(function(){
+        if (kiemTraTen() == true && kiemTraSDT() == true && kiemTraCLB() == true && kiemTraNTT() == true && kiemTraDiaChi() == true){
+            row = "<tr>";
+            row += "<th>" + (i++) + "</th>";
+            row += "<th>" + $("#Name").val() + "</th>";
+            row += "<th>" + $("#Ao").val() + "</th>";
+            row += "<th>" + $("#CLB").val() + "</th>";
+            row += "<th>" + $("#NTT").val() + "</th>";
+            row += "<th>" + $("#SDT").val() + "</th>";
+            row += "<th>" + $("#ADD").val() + "</th>";
+            $("#danhSach").append(row);
+            $("#myModal").modal("hide");
+        }
+    })   
         })
     </script>
 </head>
@@ -101,52 +170,51 @@
             </div>
         </footer>
     </div>
+    <div class="modal fade" role=dialog id="myModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>THÔNG TIN CÁ NHÂN</h2>
+            </div>
+            <div class="modal-body">
+                <form role="form" class="form-horizontal" style="margin-top: 10px;">
+                    <label for="Name" class="control-label col-xs-3">Họ Tên</label>
+                    <div class="col-xs-9">
+                        <input type="text" id="Name" class="form-control">
+                        <span class="text-danger" id="tbName">*</span>
+                    </div>
+                    <label for="Ao" class="control-label col-xs-3">Số áo</label>
+                    <div class="col-xs-9">
+                        <input type="text" id="Ao" class="form-control">
+                        <span class="text-danger" style="color:red;" id="tbAo">*</span>
+                    </div>
+                    <label for="CLB" class="control-label col-xs-3">Câu lạc bộ</label>
+                    <div class="col-xs-9">
+                        <input type="text" id="CLB" class="form-control">
+                        <span class="text-danger" style="color:red;" id="tbCLB">*</span>
+                    </div>
+                    <label for="NTT" class="control-label col-xs-3">Ngày tập trung</label>
+                    <div class="col-xs-9">
+                        <input type="text" id="NTT" class="form-control">
+                        <span class="text-danger" style="color:red;" id="tbNTT">*</span>
+                    </div>
+                    <label for="SDT" class="control-label col-xs-3">Số điẹn thoại</label>
+                    <div class="col-xs-9">
+                        <input type="text" id="SDT" class="form-control">
+                        <span class="text-danger" style="color:red;" id="tbSDT">*</span>
+                    </div>
+                    <label for="AVT" class="control-label col-xs-3">Ảnh đại diện</label>
+                    <div class="col-xs-9">
+                        <input type="text" id="AVT" class="form-control">
+                        <span class="text-danger" style="color:red;" id="tbAVT">*</span>
+                    </div>
+                    <button class="btn btn-success btn-group-justified" id="Save" type="button" style="color:white; background-color:green; width:100%;" > Lưu
     
-</body>
-</html>
-<div class="modal-fade" role=dialog id="myModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2>THÔNG TIN CÁ NHÂN</h2>
-        </div>
-        <div class="modal-body">
-            <form role="form" class="form-horizontal" style="margin-top: 10px;">
-                <label for="Name" class="control-label col-xs-3">Họ Tên</label>
-                <div class="col-xs-9">
-                    <input type="text" id="Name" class="form-control">
-                    <span class="text-danger" id="tbName">*</span>
-                </div>
-                <label for="Ao" class="control-label col-xs-3">Số áo</label>
-                <div class="col-xs-9">
-                    <input type="text" id="Ao" class="form-control">
-                    <span class="text-danger" style="color:red;" id="tbAo">*</span>
-                </div>
-                <label for="CLB" class="control-label col-xs-3">Câu lạc bộ</label>
-                <div class="col-xs-9">
-                    <input type="text" id="CLB" class="form-control">
-                    <span class="text-danger" style="color:red;" id="tbCLB">*</span>
-                </div>
-                <label for="NTT" class="control-label col-xs-3">Ngày tập trung</label>
-                <div class="col-xs-9">
-                    <input type="text" id="NTT" class="form-control">
-                    <span class="text-danger" style="color:red;" id="tbNTT">*</span>
-                </div>
-                <label for="SDT" class="control-label col-xs-3">Số điẹn thoại</label>
-                <div class="col-xs-9">
-                    <input type="text" id="SDT" class="form-control">
-                    <span class="text-danger" style="color:red;" id="tbSDT">*</span>
-                </div>
-                <label for="AVT" class="control-label col-xs-3">Ảnh đại diện</label>
-                <div class="col-xs-9">
-                    <input type="text" id="AVT" class="form-control">
-                    <span class="text-danger" style="color:red;" id="tbAVT">*</span>
-                </div>
-                <button class="btn btn-success btn-group-justified" id="Save" type="button" style="color:white; background-color:green; width:100%;" > Lưu
-
-                </button>
-
-            </form>
-            
+                    </button>
+    
+                </form>
+                
+            </div>
         </div>
     </div>
-</div>
+</body>
+</html>
